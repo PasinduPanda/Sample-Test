@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Invitation</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #fffaf6;
+      color: #333;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    header {
+      background: linear-gradient(135deg, #f9c5d1, #f7b267);
+      padding: 3rem 1rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      animation: fadeInDown 2s ease;
+    }
+    header p {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+      animation: fadeInUp 2s ease;
+    }
+    .countdown {
+      font-size: 1.5rem;
+      margin: 2rem 0;
+      animation: fadeIn 3s ease;
+    }
+    .section {
+      padding: 2rem 1rem;
+      max-width: 700px;
+      margin: auto;
+      animation: fadeIn 2s ease;
+    }
+    .map iframe {
+      width: 100%;
+      height: 300px;
+      border: 0;
+      border-radius: 10px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input, textarea, button {
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    button {
+      background: #f7b267;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #f4845f;
+    }
+    footer {
+      background: #f9c5d1;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from {opacity: 0; transform: translateY(-30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes floatHearts {
+      0% {transform: translateY(100vh) scale(0.5); opacity: 0;}
+      50% {opacity: 1;}
+      100% {transform: translateY(-10vh) scale(1); opacity: 0;}
+    }
+    .heart {
+      position: absolute;
+      bottom: -10vh;
+      font-size: 2rem;
+      color: rgba(255,255,255,0.7);
+      animation: floatHearts 6s linear infinite;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pasindu & Bride</h1>
+    <p>We’re Getting Married!</p>
+    <div class="countdown" id="countdown"></div>
+    <!-- Floating hearts -->
+    <div id="hearts"></div>
+  </header>
+
+  <section class="section">
+    <h2>💌 Invitation</h2>
+    <p>We are delighted to invite you to celebrate our special day.</p>
+    <p><strong>Date:</strong> 20th December 2025<br>
+    <strong>Time:</strong> 4:00 PM<br>
+    <strong>Venue:</strong> Shangri-La Ballroom, Colombo</p>
+    <img src="https://images.unsplash.com/photo-1529634898680-6aeb5d4c6a2b" alt="Wedding" style="width:100%; border-radius:15px; margin-top:1rem;">
+  </section>
+
+  <section class="section map">
+    <h2>📍 Location</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63313.47399879689!2d79.815005!3d6.927079!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2595be2c9cf2d%3A0x22f9c2fcbc77f2d7!2sColombo!5e0!3m2!1sen!2slk!4v1617882345678" allowfullscreen="" loading="lazy"></iframe>
+  </section>
+
+  <section class="section">
+    <h2>📝 RSVP</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea rows="3" placeholder="Message / Wishes"></textarea>
+      <button type="submit">Send RSVP</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>Made with ❤️ for our wedding</p>
+  </footer>
+
+  <script>
+    // Countdown Timer
+    const countdown = document.getElementById('countdown');
+    const weddingDate = new Date("Dec 20, 2025 16:00:00").getTime();
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+
+      if (distance < 0) {
+        countdown.innerHTML = "The wedding has begun!";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+
+    // Floating hearts generator
+    const heartsContainer = document.getElementById('hearts');
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '❤';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+    setInterval(createHeart, 800);
+  </script>
+</body>
+</html>
